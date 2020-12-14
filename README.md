@@ -54,8 +54,8 @@
 
 | **环境** | **环境名称** | **链接方式**                             | **账号获取**     |
 | -------- | ------------ | ---------------------------------------- | ---------------- |
-| sit      | 测试环境     | `https://sandbox.snbsecurities.com:8080` | 联系雪盈客服获得 |
-| prod     | 正式环境     | `https:// openapi.snbsecurities.com:443` | 参考1.1和1.2     |
+| sit      | 测试环境     | `https://sandbox.snbsecurities.com` | 联系雪盈客服获得 |
+| prod     | 正式环境     | `https:// openapi.snbsecurities.com` | 参考1.1和1.2     |
 
 >  **PORD**  环境中用户账号、资金均为真实账号、资金，所做操作全部真实有效，请**勿**做测试操作。
 
@@ -179,7 +179,6 @@ token是一串无序加密的字符串，形如: `pwQxtqj3Bl1q3ThX3I5rRJyUyQxffW
 | 名称  | 描述               |
 | ----- | ------------------ |
 | STK   | 股票               |
-| CS    | 股票               |
 | FUT   | 期货               |
 | OPT   | 期权               |
 | FOP   | 期货期权           |
