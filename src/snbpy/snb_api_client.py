@@ -6,7 +6,8 @@ import time
 
 import requests
 
-from snbpy.common.constant.exceptions import ApiExecuteException, API_EXCEPTION, TokenInvalid, LOGIN_NEEDED
+from snbpy.common.constant.exceptions import ApiExecuteException, API_EXCEPTION, TokenInvalid, LOGIN_NEEDED, \
+    ApiTransportException, TRANSPORT_EXCEPTION, SnbException
 from snbpy.common.constant.snb_constant import API_VERSION, HttpMethod, SecurityType, OrderSide, Currency, TimeInForce, \
     OrderType
 from snbpy.common.domain.request import HttpRequest, AccessTokenRequest, GetOrderListRequest, GetPositionListRequest, \
@@ -100,9 +101,11 @@ class SnbApiClient(metaclass=abc.ABCMeta):
         try:
             response_str = self._do_execute(request.url, self._prepare_param(request), headers, self._config.timeout,
                                             request.method)
+        except SnbException as e:
+            raise e
         except Exception as e:
-            logger.error("http excepiton;; %s", e)
-            raise ApiExecuteException(API_EXCEPTION, "http exception" + str(e))
+            logger.error("unknown exception;; %s", e)
+            raise ApiExecuteException(API_EXCEPTION, "unknown exception;; %s" % str(e))
         return self._parse_response(response_str)
 
 
@@ -239,6 +242,9 @@ class SnbHttpClient(SnbApiClient, TradeInterface):
                 return self.session.delete(url=request_path, headers=header, params=params, timeout=timeout).content.decode(
                     "utf-8")
 
+        except requests.exceptions.RequestException as e:
+            logger.error("do execute with request exception;; %s", e)
+            raise ApiTransportException(TRANSPORT_EXCEPTION, "transport exception " + str(e))
         except Exception as e:
             logger.error("do execute with exception;; %s", e)
             raise e
